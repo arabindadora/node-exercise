@@ -1,0 +1,25 @@
+{
+  "name": "node-exercise",
+  "version": "0.0.1",
+  "description": "example nodejs app that interacts with swapi.co and implements certain endpoints",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nullv01d/node-exercise.git"
+  },
+  "author": "arvind.kumar@msn.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nullv01d/node-exercise/issues"
+  },
+  "homepage": "https://github.com/nullv01d/node-exercise#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "lodash": "^4.14.0",
+    "request": "^2.74.0",
+    "request-promise": "^4.0.2"
+  }
+}
