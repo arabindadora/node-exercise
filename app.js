@@ -3,17 +3,59 @@
  * arvind.kumar@msn.com
  */
 
-var express = require('express');
-var app = express();
 var request = require('request-promise');
-var _ = require('lodash');
+var express = require('express');
+var app     = express();
+var _       = require('lodash');
+ 
+app.set('view engine', 'pug');
+app.set('views', __dirname + '/views');
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-app.get('/character/:name', function (req, res) {
-    res.send('To be Implemented.');
+app.get('/character/:name', (req, res) => {
+    var name    = req.params.name;
+    var baseURL = 'http://swapi.co/api/people/';
+    
+    getCharacterData(baseURL, name)
+    .then((response) => {
+        res.render('character', response);
+    })
+    .catch((err) => {
+        res.send(err);
+    });
+
+    function getCharacterData(url, name) {
+        return new Promise((resolve, reject) => {
+            request(url)
+            .then((body) => {
+                if(!body) return reject('Couldn\'t fetch data!');
+
+                var body   = JSON.parse(body);
+                var people = body.results;
+
+                _.each(people, (character) => {
+                    if(character.name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
+                        return resolve(_.pick(character, ['name', 'gender', 'height', 'mass', 'birth_year']));
+                    }
+                });
+
+                if (!body.next || body.next === null) {
+                    return reject(`No match found for ${name}!`);
+                }
+                
+                getCharacterData(body.next, name)
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+            });
+        });
+    }
 });
 
 app.get('/characters', function (req, res) {
