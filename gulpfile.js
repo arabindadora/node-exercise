@@ -1,14 +1,15 @@
-var gulp = require('gulp');
-var nodemon = require('gulp-nodemon');
-var livereload = require('gulp-livereload');
- 
-gulp.task('default', function() {
-	livereload.listen();	// listen for changes
-	nodemon({	// configure nodemon
+"use strict";
+
+const gulp = require('gulp');
+const nodemon = require('gulp-nodemon');
+const livereload = require('gulp-livereload');
+
+gulp.task('default', () => {
+	livereload.listen();
+	nodemon({
 		script: 'app.js',
 		ext: 'js'
-	}).on('restart', function(){
-		// when the app has restarted, run livereload.
+	}).on('restart', () => {
 		gulp.src('app.js')
 			.pipe(livereload());
 	});
