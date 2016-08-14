@@ -37,7 +37,7 @@ app.get('/character/:name', (req, res) => {
                 var people = body.results;
 
                 _.each(people, (character) => {
-                    if(character.name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
+                    if(character.name.toLowerCase().split(' ').indexOf(name.toLowerCase()) > -1) {
                         return resolve(_.pick(character, ['name', 'gender', 'height', 'mass', 'birth_year']));
                     }
                 });
