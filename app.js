@@ -33,11 +33,14 @@ app.get('/character/:name', (req, res) => {
             .then((body) => {
                 if(!body) return reject('Couldn\'t fetch data!');
 
-                var body   = JSON.parse(body);
+                name = name.toLowerCase();
+                body = JSON.parse(body);
                 var people = body.results;
 
                 _.each(people, (character) => {
-                    if(character.name.toLowerCase().split(' ').indexOf(name.toLowerCase()) > -1) {
+                    var charName = character.name.toLowerCase();
+                    var isMatch  = charName === name || charName.split(' ').indexOf(name) > -1;
+                    if(isMatch) {
                         return resolve(_.pick(character, ['name', 'gender', 'height', 'mass', 'birth_year']));
                     }
                 });
