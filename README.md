@@ -17,3 +17,6 @@ This will hopefully demonstrate to us abilities to make an express app, consume 
     and the potential sort parameters will be 1 of the following, ['name', 'mass', 'height']  So the endpoint '/characters?sort=height' should return JSON of 50 characters sorted by their height. 
 * '/planetresidents' - Return raw JSON in the form {planetName1: [characterName1, characterName2], planetName2: [characterName3]}. 
     So it is an object where the keys are the planet names, and the values are lists of residents names for that planet
+
+## NOTE!
+This repo consists my solution to the said exercise. Head over to [Growmies/node-exercise](https://github.com/Growmies/node-exercise) for the actual exercise without any solution.
