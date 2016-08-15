@@ -1,6 +1,6 @@
 {
   "name": "node-exercise",
-  "version": "0.0.3",
+  "version": "0.1.3",
   "description": "example nodejs app that interacts with swapi.co and implements certain endpoints",
   "author": "Arvind Kumar <arvind.kumar@msn.com>",
   "main": "app.js",
