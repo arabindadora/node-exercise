@@ -90,12 +90,21 @@ app.get('/characters', (req, res) => {
 });
 
 app.get('/planetresidents', (req, res) => {
+    getData().then((response) => {
+        res.send(response);
+    }).catch((err) => {
+        res.send(err);
+    });
+
     function getData() {
         return new Promise((resolve, reject) => {
             const url = 'http://swapi.co/api/planets';
 
             request(url).then((body) => {
-                const allPlanets = JSON.parse(body).results;
+                let response      = {};
+                let responseCount = 0;
+                const allPlanets  = JSON.parse(body).results;
+                const planetCount = Object.keys(allPlanets).length;
 
                 _.each(allPlanets, (planet) => {
                     let keyval = {};
@@ -109,20 +118,19 @@ app.get('/planetresidents', (req, res) => {
                         })
                     });
 
-                    Promise.all(all).then((residents) => {
-                        let response = {};
+                    Promise.all(all).then((residents) => {                        
                         keyval[planet.name] = residents;
-                        _.assign(response, keyval);
-                        resolve(response);
+                        _.extend(response, keyval);
+                        
+                        responseCount = Object.keys(response).length;
+                        if(responseCount === planetCount) {
+                            resolve(response);
+                        }
                     });
                 });
             });
         });
     };
-
-    getData().then((response) => {
-        res.send(response);
-    });
 })
 
 const port = process.env.port || 3000;
